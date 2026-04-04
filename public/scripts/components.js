@@ -1,4 +1,4 @@
-/*const navMenu = {
+const navMenu = {
   logoUrl: "./img/hopreneur.jpg",
   links: ["Home", "Projects", "Products", "Terms"],
   contact: {

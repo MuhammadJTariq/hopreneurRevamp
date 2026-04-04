@@ -1,3 +1,9 @@
+<?php 
+
+/*require("./router.php"); */
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +23,10 @@
 <nav>
   <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="products.html">Products</a></li>
-    <li><a href="terms.html">Terms</a></li>
+    <li><a href="index.php">Home</a></li>
+    <li><a href="projects.php">Projects</a></li>
+    <li><a href="products.php">Products</a></li>
+    <li><a href="terms.php">Terms</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Start a project</a>
 </nav>
@@ -258,5 +264,6 @@
   </div>
 </footer>
 <script src="scripts/index.js"></script>
+<script src="scripts/components.js"></script>
 </body>
 </html>
