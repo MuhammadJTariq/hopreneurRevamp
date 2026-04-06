@@ -1,3 +1,7 @@
+<?php 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +10,14 @@
 <title>Contact — Hopreneur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="contact.css">
+<link rel="stylesheet" href="/style/contact.css">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="products.html">Products</a></li>
-    <li><a href="terms.html">Terms</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Start a project</a>
+  <?php get_header(); ?>
 </nav>
 
 <div class="contact-layout">
@@ -156,3 +153,8 @@
 </script>
 </body>
 </html>
+
+
+<?php 
+
+?>

@@ -1,7 +1,6 @@
-
-  const footer = {
-    HTML : 
-    `<div class="footer-top">
+<?php 
+?>
+<div class="footer-top">
     <div class="footer-brand">
       <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
       <p>A digital agency crafting high-performance web, mobile, and AI-powered products for ambitious brands.</p>
@@ -45,7 +44,6 @@
       <li><a href="#">GitHub</a></li>
     </ul>
     <p>Toronto, Canada</p>
-  </div>`
-  };
+  </div>
 
-document.querySelector("footer").innerHTML = footer.HTML;
+<?php ?>

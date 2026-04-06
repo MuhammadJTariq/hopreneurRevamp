@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +16,8 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
-  <ul class="nav-links">
-    <li><a href="index.php">Home</a></li>
-    <li><a href="projects.php" class="active">Projects</a></li>
-    <li><a href="products.php">Products</a></li>
-    <li><a href="terms.php">Terms</a></li>
-  </ul>
-  <a href="contact.php" class="nav-cta">Start a project</a>
+  <a href="/home.php" class="logo">HOP<span>.</span>RENEUR</a>
+  <<?php get_header(); ?>
 </nav>
 
 <section class="page-hero">
@@ -154,3 +150,7 @@
 <script src="scripts/projects.js"></script>
 </body>
 </html>
+
+<?php 
+
+?>

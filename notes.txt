@@ -1,0 +1,13 @@
+Use Meta fields for accessibility
+HTTP REferrer
+and Use Crawl robots.txt 
+use headers to cache
+and do something worth it
+
+404.php is causing issues 
+referrer 
+
+.htaccess file for rewriting rules 
+.httpconfig - allow rewrite On
+
+Hostinger uses it's own version
