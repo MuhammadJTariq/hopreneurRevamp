@@ -1,4 +1,5 @@
-!DOCTYPE html>
+<?php ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,6 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/404.css'?>">
 <style>
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -120,6 +122,6 @@
 </div>
  
 
- <script src="scripts/404.js"></script>
+ <script src="<?php echo SCRIPTS_URI . '/404.js'?>"></script>
 </body>
 </html>

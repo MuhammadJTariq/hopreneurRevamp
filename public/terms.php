@@ -8,7 +8,8 @@
 <title>Terms & Policies — Hopreneur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style/terms.css">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/terms.css'?>">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/footer.css'?>">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -202,15 +203,7 @@
 </div>
 
 <footer>
-  <div class="footer-bottom">
-    <p>© 2024 Hopreneur Inc. — All rights reserved</p>
-    <ul class="footer-socials">
-      <li><a href="#">Twitter</a></li>
-      <li><a href="#">LinkedIn</a></li>
-      <li><a href="#">GitHub</a></li>
-    </ul>
-    <p>Toronto, Canada</p>
-  </div>
+  <?php get_footer(); ?>
 </footer>
 
 <script>

@@ -1,7 +1,21 @@
 <?php
 
 require_once __DIR__ . '/bootstrap.php';
+$debug = __DIR__ . '/debug.log';
+$values = [
+    'Host' => $_SERVER['HTTP_HOST'],
+    'IP' => $_SERVER['SERVER_ADDR'],
+    'Request_uri' => $_SERVER['REQUEST_URI'],
+    'REFERER' => $_SERVER['HTTP_REFERER'],
+    'METHOD' => $_SERVER['REQUEST_METHOD'],
+    'PATH' => PHP_URL_PATH,
+];
+$log = '';
 
+foreach ($values as $key => $val) {
+    $log .= $key . ': ' . $val . PHP_EOL;
+}
+file_put_contents($debug, $log . PHP_EOL,  FILE_APPEND | LOCK_EX);
 
 
 

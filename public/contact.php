@@ -10,7 +10,8 @@
 <title>Contact — Hopreneur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style/contact.css">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/contact.css'?>">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/footer.css'?>">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -28,22 +29,6 @@
       <h1>LET'S<br>BUILD<br><span class="outline">TOGETHER</span></h1>
       <p>Tell us about your project. We respond to every inquiry within 24 hours and offer a free 30-minute discovery call.</p>
       <div class="contact-info">
-        <div class="contact-info-item">
-          <span class="contact-info-label">Email</span>
-          <span class="contact-info-val"><a href="mailto:hello@hopreneur.com">hello@hopreneur.com</a></span>
-        </div>
-        <div class="contact-info-item">
-          <span class="contact-info-label">Phone</span>
-          <span class="contact-info-val"><a href="tel:+14165550000">+1 (416) 555-0000</a></span>
-        </div>
-        <div class="contact-info-item">
-          <span class="contact-info-label">Location</span>
-          <span class="contact-info-val">Toronto, Ontario, Canada</span>
-        </div>
-        <div class="contact-info-item">
-          <span class="contact-info-label">Hours</span>
-          <span class="contact-info-val">Mon – Fri, 9am – 6pm EST</span>
-        </div>
       </div>
     </div>
     <div class="contact-left-footer">
@@ -128,10 +113,7 @@
 </div>
 
 <footer>
-  <div class="footer-bottom">
-    <p>© 2024 Hopreneur Inc. — All rights reserved</p>
-    <p>Toronto, Canada</p>
-  </div>
+  <?php get_footer(); ?>
 </footer>
 
 <script>

@@ -15,6 +15,9 @@ function home_url($path = '') {
 
     return rtrim($protocol . $host, '/') . '/' . ltrim($path, '/');
 }
+function url($path){
+    return $path;
+}
 
 // 3. Web URIs (For use in HTML tags)
 define('STYLES_URI', home_url('public/style'));

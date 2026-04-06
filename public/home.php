@@ -211,7 +211,6 @@
   <?php get_footer(); ?>
 </footer>
 <script src="<?php echo SCRIPTS_URI . '/index.js';?>"></script>
-<script src="<?php echo SCRIPTS_URI . '/components.js'; ?>"></script>
 </body>
 </html>
 

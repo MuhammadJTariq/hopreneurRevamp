@@ -8,16 +8,15 @@
 <title>Projects — Hopreneur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style/footer.css">
-<link rel="stylesheet" href="style/projects.css">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/footer.css'?>">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/projects.css'?>">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="/home.php" class="logo">HOP<span>.</span>RENEUR</a>
-  <<?php get_header(); ?>
+  <?php get_header(); ?>
 </nav>
 
 <section class="page-hero">
@@ -140,14 +139,14 @@
 <section class="cta-band">
   <h2>YOUR PROJECT<br>NEXT</h2>
   <p>We're selective about the projects we take on. Tell us about your vision and let's see if we're a match.</p>
-  <a href="contact.html" class="btn-primary">Start a conversation</a>
+  <a href="<?php echo url('/contact') ?>" class="btn-primary">Start a conversation</a>
 </section>
 
 <footer>
+  <?php get_footer(); ?>
   
 </footer>
-<script src="scripts/components.js"></script>
-<script src="scripts/projects.js"></script>
+<script src="<?php echo SCRIPTS_URI . '/projects.js'?>"></script>
 </body>
 </html>
 
