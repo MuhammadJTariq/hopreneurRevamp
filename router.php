@@ -6,7 +6,7 @@ function view($file) {
     require PUBLIC_PATH . '/' . $file . '.php';
 }
 
-$routes = ['/', '/contact', '/products', '/terms', '/projects'];
+$routes = ['/', '/contact', '/products', '/terms', '/projects', '/blog'];
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     $request = $_SERVER['REQUEST_URI'];

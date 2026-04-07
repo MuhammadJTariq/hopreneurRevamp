@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo STYLES_URI . '/404.css'?>">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/style.css' ?>">
 <style>
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -122,6 +123,6 @@
 </div>
  
 
- <script src="<?php echo SCRIPTS_URI . '/404.js'?>"></script>
+ <script src="<?php echo SCRIPTS_URI . '/index.js'; ?>"></script>
 </body>
 </html>

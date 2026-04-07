@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo STYLES_URI . '/footer.css'?>">
 <link rel="stylesheet" href="<?php echo STYLES_URI . '/projects.css'?>">
+<link rel="stylesheet" href="<?php echo STYLES_URI . '/style.css' ?>">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -146,7 +147,8 @@
   <?php get_footer(); ?>
   
 </footer>
-<script src="<?php echo SCRIPTS_URI . '/projects.js'?>"></script>
+<script src="<?php echo SCRIPTS_URI . '/index.js'; ?>"></script>
+<script src="<?php echo SCRIPTS_URI . '/projects.js'; ?>"></script>
 </body>
 </html>
 

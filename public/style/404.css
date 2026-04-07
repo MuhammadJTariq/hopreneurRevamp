@@ -1,109 +1,8 @@
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-  :root {
-    --black:      #080808;
-    --off-black:  #0f0f0f;
-    --charcoal:   #161616;
-    --gunmetal:   #1e1e1e;
-    --ash:        #3d3d3d;
-    --muted:      #666;
-    --dim:        #999;
-    --ghost:      #c8c8c8;
-    --white:      #f0ede8;
-    --accent:     #e8d5a0;
-    --line:       rgba(255,255,255,0.07);
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body:    'DM Sans', sans-serif;
-    --font-mono:    'DM Mono', monospace;
-  }
- 
   html, body {
     height: 100%;
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font-body);
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
   }
- 
-  /* ── CURSOR ── */
-  .cursor {
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: transform 0.15s ease;
-  }
-  .cursor-ring {
-    width: 38px; height: 38px;
-    border: 1px solid rgba(232,213,160,0.35);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: width 0.2s, height 0.2s;
-  }
- 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 24px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.96), transparent);
-  }
-  .logo {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 0.12em;
-    color: var(--white);
-    text-decoration: none;
-  }
-  .logo span { color: var(--accent); }
- 
-  .nav-links { display: flex; gap: 40px; list-style: none; }
-  .nav-links a {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--dim);
-    text-decoration: none;
-    transition: color 0.25s;
-    position: relative;
-  }
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px; left: 0; right: 0;
-    height: 1px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .nav-links a:hover { color: var(--white); }
-  .nav-links a:hover::after { transform: scaleX(1); }
- 
-  .nav-cta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--accent);
-    padding: 10px 24px;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--white); }
- 
-  /* ── MAIN LAYOUT ── */
+
+  /* MAIN LAYOUT */
   main {
     min-height: 100vh;
     display: grid;
@@ -111,7 +10,7 @@
     position: relative;
   }
  
-  /* ── LEFT PANEL ── */
+  /* LEFT PANEL */
   .left {
     display: flex;
     flex-direction: column;
@@ -195,7 +94,7 @@
     color: var(--dim);
   }
  
-  /* ── RIGHT PANEL ── */
+  /* RIGHT PANEL */
   .right {
     display: flex;
     flex-direction: column;
@@ -289,7 +188,7 @@
   .quick-links a:hover span { opacity: 1; }
  
   <?php if ($referrer): ?>
-  /* ── REFERRER NOTICE ── */
+  /* REFERRER NOTICE */
   .referrer-bar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -333,7 +232,7 @@
   .referrer-close:hover { border-color: var(--accent); color: var(--accent); }
   <?php endif; ?>
  
-  /* ── FOOTER STRIP ── */
+  /* FOOTER STRIP */
   .footer-strip {
     position: fixed;
     bottom: <?= $referrer ? '50px' : '0' ?>;
@@ -355,7 +254,7 @@
   }
   .footer-strip p span { color: var(--accent); }
  
-  /* ── ANIMATIONS ── */
+  /* ANIMATIONS */
   .fade-up {
     opacity: 0;
     transform: translateY(24px);
@@ -371,7 +270,7 @@
   .fade-up:nth-child(5) { animation-delay: 0.45s; }
   .fade-up:nth-child(6) { animation-delay: 0.55s; }
  
-  /* ── GLITCH ON 404 ── */
+  /* GLITCH ON 404 */
   @keyframes glitch {
     0%   { clip-path: inset(0 0 95% 0); transform: translateX(-4px); }
     10%  { clip-path: inset(60% 0 20% 0); transform: translateX(4px); }
@@ -399,4 +298,4 @@
     95%  { opacity: 0; }
   }
  
-  /* ── RESPONSIVE ── */
+  /* RESPONSIVE */
