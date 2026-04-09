@@ -1,3 +1,10 @@
+<?php
+
+
+$rest = new Rest();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +58,7 @@
 
 <!-- ═══════════ FEATURED POST ═══════════ -->
 <!-- ✏️ EDIT: href, category, date, title, excerpt, author, read time -->
-<a href="blog-single.html" class="featured-post fade-up">
+<a href="<?php echo url('/blog-single'); ?>" class="featured-post fade-up">
   <div class="featured-visual">
     <div class="featured-visual-grid"></div>
     <div class="featured-visual-glow"></div>
@@ -59,19 +66,7 @@
     <div class="featured-visual-placeholder">AI</div>
     <span class="featured-visual-tag">Featured</span>
   </div>
-  <div class="featured-content">
-    <div>
-      <div class="featured-meta">
-        <span class="meta-label cat">AI & Automation</span>
-        <span class="meta-sep"></span>
-        <span class="meta-label date">December 12, 2024</span>
-      </div>
-      <h2>HOW WE EMBEDDED AI INTO A CRM AND CUT MANUAL WORK BY 70%</h2>
-      <p>
-        A detailed breakdown of how we integrated LLM-powered automation into an existing customer relationship platform — the architecture decisions, the pitfalls we hit, and the results that followed.
-      </p>
-    </div>
-    <div class="featured-footer">
+     <?php echo $rest->getRecent(); ?>
       <div class="author-row">
         <!-- ✏️ EDIT: initials, name, read time -->
         <div class="author-avatar">MK</div>

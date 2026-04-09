@@ -6,6 +6,7 @@
     <li><a href="<?php echo url('/projects'); ?>">Projects</a></li>
     <li><a href="<?php echo url('/products'); ?>">Products</a></li>
     <li><a href="<?php echo url('/terms'); ?>">Terms</a></li>
+    <li><a href="<?php echo url('/blog') ;?>">Blog</a></li>
 </ul>
 <a href="<?php echo url('/contact'); ?>" class="nav-cta">Contact us</a>
 

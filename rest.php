@@ -1,26 +1,66 @@
 <?php 
 
 Class Rest {
-    private $path;
+    private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts";
+    private $find_post_id = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
+    private $find_author_id = "https://hopreneur.com/cms/wp-json/wp/v2/users/";
+    private $find_categories = "https://hopreneur.com/cms/wp-json/wp/v2/categories?post=";
     private $method;
-    public function __construct() {
-        $this->path = "https://hopreneur.com/cms/wp-json/wp/v2/posts";
-        $this->fetch();
+    public function fetch($path, $id = null){
+        $data = null;
 
-    }
+        if($id){
+            $path .= $id;
+        }
 
-    public function fetch(){
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->path);
+        curl_setopt($ch, CURLOPT_URL, $path);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+
         $response = curl_exec($ch);
+
         if (curl_errno($ch)) {
             echo 'Error: ' . curl_error($ch);
         } else {
             $data = json_decode($response, true);
-            print_r($data);
-            $this->clean($data);
         }
+
+        curl_close($ch);
+
+        return $data;
+    }
+
+    public  function getRecent(){
+        $values = $this->fetch($this->path, "?per_page=1");
+        $post = is_array($values) && isset($values[0]) ? $values[0] : null;
+
+        if (!$post) {
+            return '';
+        }
+
+        $postId = $post['id'] ?? '';
+        $title = $post['title']['rendered'] ?? '';
+        $excerpt = $post['excerpt']['rendered'] ?? '';
+        $date = !empty($post['date']) ? date('F j, Y', strtotime($post['date'])) : '';
+
+        return "
+        <div class=\"featured-content\" data-id=\"{$postId}\">
+          <div>
+            <div class=\"featured-meta\">
+              <span class=\"meta-label cat\">Latest Post</span>
+              <span class=\"meta-sep\"></span>
+              <span class=\"meta-label date\">{$date}</span>
+            </div>
+            <h2>{$title}</h2>
+            <p>
+              {$excerpt}
+            </p>
+          </div>
+        </div>
+        ";
+
+
+
     }
 
     private function getCategories($values){
@@ -30,23 +70,12 @@ Class Rest {
     private function getAuthor($values){
         $author = array();
     }
-    private function clean($data){
-        $values = [];
-        foreach($data as $item){
-            if($item['status'] === "publish"){
-                $values["id"] = $item['id'];
-                $values['title'] = $item['title']['rendered'];
-                $values['excerpt'] = $item['excerpt']['rendered'];
-                //$values['categories'] = function to get the names
-                //$values['author'] = function to get the name
-            
-            
 
-            }
-            
-        }
+    public function getTitle(){
 
-        return $values;
+    }
+
+    public function getExcerpt(){
 
     }
 
