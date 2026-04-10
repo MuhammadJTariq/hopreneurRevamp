@@ -11,3 +11,8 @@ referrer
 .httpconfig - allow rewrite On
 
 Hostinger uses it's own version
+
+** Use functions for tags and recent posts and id's for the WordPress Rest API
+Email Template via webhook N8N 
+or Airtable
+Advertise

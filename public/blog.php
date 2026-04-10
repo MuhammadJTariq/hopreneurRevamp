@@ -71,11 +71,11 @@ $rest = new Rest();
         <!-- ✏️ EDIT: initials, name, read time -->
         <div class="author-avatar">MK</div>
         <div>
-          <span class="author-name">Marcus Kim</span>
+          <span class="author-name"><?php echo $rest->returnRecentAuthor(); ?></span>
           <span class="read-time">8 min read</span>
         </div>
       </div>
-      <span class="read-cta">Read article →</span>
+      <span class="read-cta" data-id="<?php echo $rest->post_id; ?>">Read article →</span>
     </div>
   </div>
 </a>

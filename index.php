@@ -1,5 +1,7 @@
 <?php
 
+global $debug;
+$debug = __DIR__ . "/debug.log";
 require_once __DIR__ . '/bootstrap.php';
 $debug = __DIR__ . '/debug.log';
 $values = [

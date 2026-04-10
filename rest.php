@@ -1,11 +1,14 @@
 <?php 
 
 Class Rest {
-    private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts";
+    private $debug = __DIR__ . '/debug.log';
+    private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
     private $find_post_id = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
     private $find_author_id = "https://hopreneur.com/cms/wp-json/wp/v2/users/";
     private $find_categories = "https://hopreneur.com/cms/wp-json/wp/v2/categories?post=";
-    private $method;
+    public $author_id;
+
+    public $post_id;
     public function fetch($path, $id = null){
         $data = null;
 
@@ -30,6 +33,16 @@ Class Rest {
         return $data;
     }
 
+    public function returnRecentAuthor(){
+        $author = $this->fetch($this->find_author_id, $this->author_id);
+        $name = $author['name'];
+        //file_put_contents($this->debug, $author);
+        return $name;
+
+
+    }
+
+
     public  function getRecent(){
         $values = $this->fetch($this->path, "?per_page=1");
         $post = is_array($values) && isset($values[0]) ? $values[0] : null;
@@ -42,6 +55,8 @@ Class Rest {
         $title = $post['title']['rendered'] ?? '';
         $excerpt = $post['excerpt']['rendered'] ?? '';
         $date = !empty($post['date']) ? date('F j, Y', strtotime($post['date'])) : '';
+        $this->author_id = $post['author'];
+        $this->post_id = $postId;
 
         return "
         <div class=\"featured-content\" data-id=\"{$postId}\">
