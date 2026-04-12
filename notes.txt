@@ -12,7 +12,12 @@ referrer
 
 Hostinger uses it's own version
 
+** For the Post content remember to extract all the headings and format it 
+** Use a custom script for that
+
 ** Use functions for tags and recent posts and id's for the WordPress Rest API
 Email Template via webhook N8N 
 or Airtable
 Advertise
+
+** Just use one template for each 

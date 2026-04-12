@@ -89,83 +89,7 @@ $rest = new Rest();
 
   <div class="posts-grid">
 
-    <!-- ✏️ Duplicate .post-card blocks for each post -->
-
-    <a href="blog-single.html" class="post-card fade-up">
-      <div class="post-card-thumb">
-        <div class="post-card-thumb-grid"></div>
-        <div class="post-card-thumb-glow"></div>
-        <!-- ✏️ Replace with <img src="..." alt="..."> -->
-        <div class="post-thumb-placeholder">UX</div>
-        <span class="post-cat-tag">Design</span>
-      </div>
-      <div class="post-card-body">
-        <div class="post-card-meta">
-          <span>Nov 28, 2024</span>
-          <div class="dot"></div>
-          <span>6 min read</span>
-        </div>
-        <h3>THE DESIGN DECISIONS THAT SHIP FASTER</h3>
-        <p>Why our team moved to a constraints-first design process — and how it reduced our average design cycle from 3 weeks to 9 days.</p>
-        <div class="post-card-footer">
-          <div class="post-author-sm">
-            <div class="post-avatar-sm">SR</div>
-            <span>Sara R.</span>
-          </div>
-          <span class="post-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="blog-single.html" class="post-card fade-up">
-      <div class="post-card-thumb">
-        <div class="post-card-thumb-grid"></div>
-        <div class="post-card-thumb-glow"></div>
-        <div class="post-thumb-placeholder">NX</div>
-        <span class="post-cat-tag">Case Study</span>
-      </div>
-      <div class="post-card-body">
-        <div class="post-card-meta">
-          <span>Nov 14, 2024</span>
-          <div class="dot"></div>
-          <span>11 min read</span>
-        </div>
-        <h3>LAUNCHING NEXVAULT FROM ZERO IN 6 WEEKS</h3>
-        <p>A full retrospective of one of our most complex engagements — the stack, the timeline, the decision we almost got wrong.</p>
-        <div class="post-card-footer">
-          <div class="post-author-sm">
-            <div class="post-avatar-sm">MK</div>
-            <span>Marcus K.</span>
-          </div>
-          <span class="post-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="blog-single.html" class="post-card fade-up">
-      <div class="post-card-thumb">
-        <div class="post-card-thumb-grid"></div>
-        <div class="post-card-thumb-glow"></div>
-        <div class="post-thumb-placeholder">OPS</div>
-        <span class="post-cat-tag">Strategy</span>
-      </div>
-      <div class="post-card-body">
-        <div class="post-card-meta">
-          <span>Oct 31, 2024</span>
-          <div class="dot"></div>
-          <span>5 min read</span>
-        </div>
-        <h3>WHY MOST AGENCIES FAIL AT RETAINERS</h3>
-        <p>The structural problem with how most agencies set up ongoing relationships — and the model we use instead.</p>
-        <div class="post-card-footer">
-          <div class="post-author-sm">
-            <div class="post-avatar-sm">AJ</div>
-            <span>Alex J.</span>
-          </div>
-          <span class="post-arrow">→</span>
-        </div>
-      </div>
-    </a>
+    <?php $rest->returnHead(); ?>
 
   </div>
 
@@ -173,66 +97,8 @@ $rest = new Rest();
   <div style="margin-top:2px;">
 
     <!-- ✏️ Duplicate .post-row blocks for list-style entries -->
-
-    <a href="blog-single.html" class="post-row fade-up">
-      <div class="post-row-thumb">
-        <div class="post-row-thumb-grid"></div>
-        <div class="post-row-thumb-val">DB</div>
-      </div>
-      <div class="post-row-body">
-        <div class="post-row-meta">
-          <span class="cat">Development</span>
-          <span>·</span>
-          <span>Oct 15, 2024</span>
-        </div>
-        <h3>POSTGRES VS MYSQL IN 2024: A REAL-WORLD COMPARISON</h3>
-        <p>We've used both extensively. Here's what actually matters when you're choosing a database for a production SaaS product.</p>
-      </div>
-      <div class="post-row-right">
-        <span class="read-time">7 min read</span>
-        <span class="read-link">Read →</span>
-      </div>
-    </a>
-
-    <a href="blog-single.html" class="post-row fade-up">
-      <div class="post-row-thumb">
-        <div class="post-row-thumb-grid"></div>
-        <div class="post-row-thumb-val">CI</div>
-      </div>
-      <div class="post-row-body">
-        <div class="post-row-meta">
-          <span class="cat">Development</span>
-          <span>·</span>
-          <span>Sep 28, 2024</span>
-        </div>
-        <h3>SETTING UP CI/CD FOR A NEXT.JS APP ON AWS IN 30 MINUTES</h3>
-        <p>A step-by-step walkthrough of the exact pipeline we deploy for every client project — GitHub Actions, ECR, and ECS.</p>
-      </div>
-      <div class="post-row-right">
-        <span class="read-time">10 min read</span>
-        <span class="read-link">Read →</span>
-      </div>
-    </a>
-
-    <a href="blog-single.html" class="post-row fade-up">
-      <div class="post-row-thumb">
-        <div class="post-row-thumb-grid"></div>
-        <div class="post-row-thumb-val">BR</div>
-      </div>
-      <div class="post-row-body">
-        <div class="post-row-meta">
-          <span class="cat">Strategy</span>
-          <span>·</span>
-          <span>Sep 10, 2024</span>
-        </div>
-        <h3>WHAT MAKES A GREAT AGENCY BRIEF — FROM A DEVELOPER'S PERSPECTIVE</h3>
-        <p>The project briefs that save us weeks are written a specific way. Here's the template we wish every client used.</p>
-      </div>
-      <div class="post-row-right">
-        <span class="read-time">4 min read</span>
-        <span class="read-link">Read →</span>
-      </div>
-    </a>
+    <?php $rest->returnTail(); ?>
+    
 
   </div>
 </section>
