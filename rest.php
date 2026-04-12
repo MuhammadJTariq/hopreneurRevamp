@@ -213,26 +213,6 @@ HTML;
     );
 }
 
-    /*private function getCategories($values){
-        $categories = array();
-    }
-
-    private function getAuthor($values){
-        $author = array();
-    }
-
-    public function getTitle(){
-
-    }
-
-    public function getExcerpt(){
-
-    }
-
-    public function __call($method, $args) {
-
-    }
-    */
 
 }
 

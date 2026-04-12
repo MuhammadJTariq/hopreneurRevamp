@@ -7,7 +7,7 @@ function view($file) {
     require PUBLIC_PATH . '/' . $file . '.php';
 }
 
-$routes = ['/', '/contact', '/products', '/terms', '/projects', '/blog', '/blog-single'];
+$routes = ['/', '/contact', '/products', '/terms', '/projects', '/blog'];
 
 if($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] !== '/blog/'){
     $request = $_SERVER['REQUEST_URI'];
@@ -38,6 +38,7 @@ if($_SERVER['REQUEST_URI'] === "/blog/"){
 
     if ($parts[0] === 'blog' && isset($parts[1])) {
         $slug = $parts[1];
+        view('blog-single');
     }
 }
 

@@ -1,0 +1,7 @@
+Host: hopreneur.test
+IP: 127.0.0.1
+Request_uri: /blog/
+REFERER: 
+METHOD: GET
+PATH: 5
+

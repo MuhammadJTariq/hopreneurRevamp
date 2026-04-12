@@ -23,15 +23,7 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="products.html">Products</a></li>
-    <li><a href="blog.html" class="active">Journal</a></li>
-    <li><a href="terms.html">Terms</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Start a project</a>
+  <?php get_header(); ?>
 </nav>
 
 <!-- BREADCRUMB -->
