@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive — Hopreneur Journal</title>
+<meta name="description" content="Browse the complete archive of articles, case studies, and insights from the Hopreneur team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:     #080808;
+    --off-black: #0f0f0f;
+    --charcoal:  #161616;
+    --gunmetal:  #1e1e1e;
+    --ash:       #3d3d3d;
+    --muted:     #666;
+    --dim:       #999;
+    --ghost:     #c8c8c8;
+    --white:     #f0ede8;
+    --accent:    #e8d5a0;
+    --line:      rgba(255,255,255,0.07);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CURSOR ── */
+  .cursor { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; }
+  .cursor-ring { width: 38px; height: 38px; border: 1px solid rgba(232,213,160,0.35); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.97), transparent);
+  }
+  .logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.12em; color: var(--white); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); text-decoration: none; transition: color 0.25s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--white); }
+  .nav-links a.active::after { transform: scaleX(1); }
+  .nav-cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--black); background: var(--accent); padding: 10px 24px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--white); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 160px 48px 80px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.45;
+  }
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: flex-end;
+  }
+  .hero-left {}
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-label::before { content: ''; width: 36px; height: 1px; background: var(--accent); }
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 11vw, 160px);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  .page-hero h1 em { font-style: normal; -webkit-text-stroke: 1px rgba(240,237,232,0.2); color: transparent; }
+
+  .hero-right {
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--dim);
+    max-width: 400px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  .hero-stat {
+    flex: 1;
+    padding: 20px 24px;
+    border-right: 1px solid var(--line);
+    text-align: center;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num { font-family: var(--font-display); font-size: 40px; color: var(--accent); letter-spacing: 0.04em; line-height: 1; display: block; }
+  .hero-stat-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
+
+  /* ═══════════════════════════════════
+     SEARCH + CONTROLS BAR
+  ════════════════════════════════════ */
+  .search-bar-wrap {
+    position: sticky;
+    top: 76px;
+    z-index: 90;
+    background: var(--off-black);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* MAIN SEARCH INPUT ROW */
+  .search-row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .search-icon-col {
+    width: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    color: var(--accent);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  #searchInput {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 22px 28px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    cursor: none;
+  }
+  #searchInput::placeholder { color: var(--muted); }
+
+  .search-clear {
+    width: 56px;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--line);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    cursor: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .search-clear.visible { opacity: 1; }
+  .search-clear:hover { color: var(--accent); }
+
+  .search-kbd {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 24px;
+    border-left: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .kbd {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border: 1px solid var(--ash);
+    padding: 3px 7px;
+  }
+
+  /* FILTER CONTROLS ROW */
+  .controls-row {
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .controls-row::-webkit-scrollbar { display: none; }
+
+  /* Category pills */
+  .cat-filters {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--line);
+  }
+
+  .cat-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-right: 1px solid var(--line);
+    padding: 14px 22px;
+    cursor: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .cat-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+  .cat-btn:hover { color: var(--white); }
+  .cat-btn.active { color: var(--accent); }
+  .cat-btn.active::after { transform: scaleX(1); }
+
+  /* Sort + Year dropdowns */
+  .controls-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ctrl-select {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+    background: none;
+    border: none;
+    border-left: 1px solid var(--line);
+    padding: 14px 20px;
+    cursor: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .ctrl-select option { background: var(--charcoal); color: var(--white); }
+  .ctrl-select:focus { color: var(--accent); }
+
+  .view-toggle {
+    display: flex;
+    border-left: 1px solid var(--line);
+  }
+  .view-btn {
+    width: 48px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: none;
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .view-btn:last-child { border-left: 1px solid var(--line); }
+  .view-btn.active { color: var(--accent); background: var(--charcoal); }
+
+  /* SEARCH HINT / RESULT COUNT */
+  .search-status {
+    padding: 10px 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--black);
+  }
+  .search-status span { color: var(--accent); }
+  .search-time { color: var(--ash); }
+
+  /* ═══════════════════════════════════
+     MAIN LAYOUT: Sidebar + Results
+  ════════════════════════════════════ */
+  .archive-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+  }
+
+  /* ── LEFT SIDEBAR ── */
+  .archive-sidebar {
+    border-right: 1px solid var(--line);
+    padding: 48px 36px 80px;
+    position: sticky;
+    top: 210px;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ash) transparent;
+  }
+
+  .sidebar-section { margin-bottom: 40px; }
+  .sidebar-section:last-child { margin-bottom: 0; }
+
+  .sidebar-heading {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-reset {
+    font-size: 8px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .sidebar-reset:hover { color: var(--accent); }
+
+  /* Topic checkboxes */
+  .topic-filter-list { list-style: none; }
+  .topic-filter-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: none;
+  }
+  .topic-filter-item:last-child { border-bottom: none; }
+
+  .topic-check-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: none;
+    font-size: 13px;
+    color: var(--dim);
+    transition: color 0.2s;
+  }
+  .topic-check-label:hover { color: var(--white); }
+
+  .topic-checkbox {
+    width: 14px; height: 14px;
+    background: var(--gunmetal);
+    border: 1px solid var(--ash);
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: none;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+  .topic-checkbox:checked { background: var(--accent); border-color: var(--accent); }
+  .topic-checkbox:checked::after { content: ''; position: absolute; top: 3px; left: 3px; width: 6px; height: 4px; border-left: 1.5px solid var(--black); border-bottom: 1.5px solid var(--black); transform: rotate(-45deg); }
+
+  .topic-count {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ash);
+  }
+
+  /* Year filter */
+  .year-list { list-style: none; }
+  .year-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: none;
+  }
+  .year-item:last-child { border-bottom: none; }
+  .year-btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--dim);
+    background: none;
+    border: none;
+    cursor: none;
+    padding: 0;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .year-btn:hover { color: var(--accent); }
+  .year-btn.active { color: var(--accent); }
+  .year-btn.active::before { content: '→'; font-size: 10px; }
+  .year-count { font-family: var(--font-mono); font-size: 9px; color: var(--ash); }
+
+  /* Read time filter */
+  .rt-options { display: flex; flex-direction: column; gap: 8px; }
+  .rt-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--ash);
+    padding: 9px 14px;
+    cursor: none;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .rt-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .rt-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,213,160,0.04); }
+
+  /* Active filters summary */
+  .active-filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+  .active-filters.has-filters { display: flex; }
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: none;
+    border: none;
+    transition: opacity 0.2s;
+  }
+  .filter-chip:hover { opacity: 0.8; }
+  .filter-chip .chip-x { font-size: 11px; }
+
+  /* ── RESULTS PANEL ── */
+  .archive-results { padding: 0; }
+
+  /* ── YEAR DIVIDER within results ── */
+  .year-divider {
+    padding: 20px 48px;
+    background: var(--off-black);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 210px;
+    z-index: 10;
+  }
+  .year-divider-num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--charcoal);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .year-divider-line { flex: 1; height: 1px; background: var(--line); }
+  .year-divider-count {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── ARCHIVE ROW (list view) ── */
+  .archive-row {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .archive-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: var(--accent);
+    opacity: 0.06;
+    transition: width 0.3s ease;
+  }
+  .archive-row:hover { background: var(--charcoal); }
+  .archive-row:hover::before { width: 100%; }
+
+  .ar-index {
+    padding: 28px 0 28px 48px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ash);
+    flex-shrink: 0;
+    width: 100px;
+  }
+
+  .ar-body {
+    padding: 28px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .ar-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ar-cat {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .ar-dot { width: 3px; height: 3px; background: var(--ash); border-radius: 50%; flex-shrink: 0; }
+  .ar-date {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ar-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ar-excerpt {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 680px;
+  }
+
+  .ar-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .ar-tag {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ash);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 3px 8px;
+    transition: all 0.2s;
+  }
+  .archive-row:hover .ar-tag { border-color: var(--accent); color: var(--accent); }
+
+  .ar-right {
+    padding: 28px 48px 28px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 140px;
+  }
+  .ar-read-time {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ar-arrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .archive-row:hover .ar-arrow { opacity: 1; transform: translateX(0); }
+
+  /* HIGHLIGHT matching search text */
+  .highlight {
+    background: rgba(232,213,160,0.2);
+    color: var(--accent);
+    padding: 0 2px;
+  }
+
+  /* ── GRID VIEW ── */
+  .archive-results.grid-view .year-group { display: block; }
+  .grid-posts {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 2px;
+  }
+  .archive-results.grid-view .grid-posts { display: grid; }
+  .archive-results.grid-view .list-posts { display: none; }
+  .list-posts { display: block; }
+  .archive-results.grid-view .year-divider { position: relative; top: 0; }
+
+  .grid-card {
+    background: var(--charcoal);
+    border: 1px solid var(--line);
+    padding: 36px 32px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .grid-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(232,213,160,0.04) 0%, transparent 70%); pointer-events: none; }
+  .grid-card:hover { border-color: var(--accent); }
+  .gc-meta { display: flex; align-items: center; gap: 10px; }
+  .gc-cat { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .gc-dot { width: 2px; height: 2px; background: var(--ash); border-radius: 50%; }
+  .gc-date { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .grid-card h3 { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.04em; color: var(--white); line-height: 1.1; flex-grow: 1; }
+  .grid-card p { font-size: 12px; line-height: 1.6; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .gc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .gc-read-time { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .gc-arrow { font-family: var(--font-mono); font-size: 11px; color: var(--accent); opacity: 0; transition: opacity 0.2s; }
+  .grid-card:hover .gc-arrow { opacity: 1; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    display: none;
+    padding: 120px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .empty-state.visible { display: block; }
+  .empty-icon {
+    font-family: var(--font-display);
+    font-size: 120px;
+    color: var(--charcoal);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 24px;
+  }
+  .empty-state h3 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+  .empty-state p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--dim);
+    max-width: 400px;
+    margin: 0 auto 32px;
+  }
+  .btn-outline { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); border: 1px solid var(--ash); padding: 14px 36px; text-decoration: none; cursor: none; background: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer { padding: 64px 48px 40px; border-top: 1px solid var(--line); background: var(--off-black); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid var(--line); }
+  .footer-bottom p { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .footer-socials { display: flex; gap: 24px; list-style: none; }
+  .footer-socials a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-socials a:hover { color: var(--accent); }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="logo">HOP<span>.</span>RENEUR</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="blog.html">Journal</a></li>
+    <li><a href="archive.html" class="active">Archive</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Start a project</a>
+</nav>
+
+<!-- ════════════ PAGE HERO ════════════ -->
+<section class="page-hero fade-up">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-label">Complete archive</div>
+      <h1>EVERY<br><em>ARTICLE</em><br>EVER</h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-desc">
+        The complete archive of everything we've published — case studies, deep dives, opinions, and how-tos from the Hopreneur team since 2022.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="totalCount">24</span>
+          <span class="hero-stat-label">Articles</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">5</span>
+          <span class="hero-stat-label">Categories</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label">Years</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ STICKY SEARCH + CONTROLS ════════════ -->
+<div class="search-bar-wrap">
+  <!-- BIG SEARCH INPUT -->
+  <div class="search-row">
+    <div class="search-icon-col">⌕</div>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search by title, topic, or keyword..."
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <button class="search-clear" id="searchClear" title="Clear search">✕</button>
+    <div class="search-kbd">
+      <span class="kbd">⌘</span>
+      <span class="kbd">K</span>
+    </div>
+  </div>
+
+  <!-- CATEGORY + SORT CONTROLS -->
+  <div class="controls-row">
+    <div class="cat-filters">
+      <button class="cat-btn active" data-cat="all">All</button>
+      <button class="cat-btn" data-cat="development">Development</button>
+      <button class="cat-btn" data-cat="design">Design</button>
+      <button class="cat-btn" data-cat="strategy">Strategy</button>
+      <button class="cat-btn" data-cat="ai">AI & Automation</button>
+      <button class="cat-btn" data-cat="case-study">Case Studies</button>
+    </div>
+    <div class="controls-right">
+      <select class="ctrl-select" id="sortSelect">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+        <option value="shortest">Shortest read</option>
+        <option value="longest">Longest read</option>
+      </select>
+      <select class="ctrl-select" id="yearSelect">
+        <option value="all">All years</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+      </select>
+      <div class="view-toggle">
+        <button class="view-btn active" id="listViewBtn" title="List view">☰</button>
+        <button class="view-btn" id="gridViewBtn" title="Grid view">⊞</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT STATUS -->
+  <div class="search-status">
+    <span>Showing <span id="resultCount">24</span> of <span id="totalCountStatus">24</span> articles</span>
+    <span class="search-time" id="searchTime"></span>
+  </div>
+</div>
+
+<!-- ════════════ MAIN LAYOUT ════════════ -->
+<div class="archive-layout">
+
+  <!-- ── LEFT SIDEBAR FILTERS ── -->
+  <aside class="archive-sidebar">
+
+    <!-- Active filters chips -->
+    <div class="active-filters" id="activeFilters"></div>
+
+    <!-- TOPICS -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">
+        Topics
+        <button class="sidebar-reset" id="resetTopics">Reset</button>
+      </div>
+      <ul class="topic-filter-list">
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="next.js"> Next.js
+          </label>
+          <span class="topic-count">5</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="react"> React
+          </label>
+          <span class="topic-count">4</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="ui design"> UI Design
+          </label>
+          <span class="topic-count">6</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="ai integration"> AI Integration
+          </label>
+          <span class="topic-count">3</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="devops"> DevOps
+          </label>
+          <span class="topic-count">3</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="aws"> AWS
+          </label>
+          <span class="topic-count">4</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="typescript"> TypeScript
+          </label>
+          <span class="topic-count">3</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="figma"> Figma
+          </label>
+          <span class="topic-count">2</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="postgresql"> PostgreSQL
+          </label>
+          <span class="topic-count">2</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-topic="mobile"> Mobile
+          </label>
+          <span class="topic-count">2</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- YEAR -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Year</div>
+      <ul class="year-list">
+        <li class="year-item">
+          <button class="year-btn active" data-year="all">All years</button>
+          <span class="year-count">24</span>
+        </li>
+        <li class="year-item">
+          <button class="year-btn" data-year="2024">2024</button>
+          <span class="year-count">12</span>
+        </li>
+        <li class="year-item">
+          <button class="year-btn" data-year="2023">2023</button>
+          <span class="year-count">8</span>
+        </li>
+        <li class="year-item">
+          <button class="year-btn" data-year="2022">2022</button>
+          <span class="year-count">4</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- READ TIME -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">
+        Read time
+        <button class="sidebar-reset" id="resetReadTime">Reset</button>
+      </div>
+      <div class="rt-options">
+        <button class="rt-btn active" data-rt="all">Any length</button>
+        <button class="rt-btn" data-rt="short">Quick read · under 5 min</button>
+        <button class="rt-btn" data-rt="medium">Medium · 5–10 min</button>
+        <button class="rt-btn" data-rt="long">Deep dive · 10+ min</button>
+      </div>
+    </div>
+
+    <!-- AUTHORS -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Author</div>
+      <ul class="topic-filter-list">
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-author="marcus-kim"> Marcus Kim
+          </label>
+          <span class="topic-count">9</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-author="sara-r"> Sara R.
+          </label>
+          <span class="topic-count">8</span>
+        </li>
+        <li class="topic-filter-item">
+          <label class="topic-check-label">
+            <input type="checkbox" class="topic-checkbox" data-author="alex-j"> Alex J.
+          </label>
+          <span class="topic-count">7</span>
+        </li>
+      </ul>
+    </div>
+
+  </aside>
+
+  <!-- ── RESULTS PANEL ── -->
+  <div class="archive-results" id="archiveResults">
+
+    <!-- ════ 2024 GROUP ════ -->
+    <div class="year-group" data-year-group="2024">
+      <div class="year-divider">
+        <span class="year-divider-num">2024</span>
+        <div class="year-divider-line"></div>
+        <span class="year-divider-count">12 articles</span>
+      </div>
+
+      <!-- LIST VIEW posts -->
+      <div class="list-posts">
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="How We Embedded AI Into a CRM and Cut Manual Work by 70%"
+           data-cat="ai" data-year="2024" data-tags="ai,llms,crm,node.js,openai,automation"
+           data-read="8" data-author="marcus-kim" data-date="2024-12-12">
+          <div class="ar-index">01</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">AI & Automation</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Dec 12, 2024</span>
+            </div>
+            <div class="ar-title">How We Embedded AI Into a CRM and Cut Manual Work by 70%</div>
+            <div class="ar-excerpt">Architecture decisions, pitfalls, and the real numbers behind integrating LLMs into a legacy Salesforce instance.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">AI</span>
+              <span class="ar-tag">LLMs</span>
+              <span class="ar-tag">Node.js</span>
+              <span class="ar-tag">OpenAI</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">8 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="The Design Decisions That Ship Faster"
+           data-cat="design" data-year="2024" data-tags="ui design,figma,process"
+           data-read="6" data-author="sara-r" data-date="2024-11-28">
+          <div class="ar-index">02</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">Design</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Nov 28, 2024</span>
+            </div>
+            <div class="ar-title">The Design Decisions That Ship Faster</div>
+            <div class="ar-excerpt">Why our constraints-first design process cut the average design cycle from 3 weeks to 9 days.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">UI Design</span>
+              <span class="ar-tag">Figma</span>
+              <span class="ar-tag">Process</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">6 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="Launching NexVault from Zero in 6 Weeks"
+           data-cat="case-study" data-year="2024" data-tags="next.js,postgresql,aws,case study"
+           data-read="11" data-author="marcus-kim" data-date="2024-11-14">
+          <div class="ar-index">03</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">Case Study</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Nov 14, 2024</span>
+            </div>
+            <div class="ar-title">Launching NexVault from Zero in 6 Weeks</div>
+            <div class="ar-excerpt">A full retrospective of our most complex engagement — the stack, the timeline, and the decision we almost got wrong.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">Next.js</span>
+              <span class="ar-tag">PostgreSQL</span>
+              <span class="ar-tag">AWS</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">11 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="Why Most Agencies Fail at Retainers"
+           data-cat="strategy" data-year="2024" data-tags="agency,strategy,retainers"
+           data-read="5" data-author="alex-j" data-date="2024-10-31">
+          <div class="ar-index">04</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">Strategy</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Oct 31, 2024</span>
+            </div>
+            <div class="ar-title">Why Most Agencies Fail at Retainers</div>
+            <div class="ar-excerpt">The structural problem with how most agencies set up ongoing relationships — and the model we use instead.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">Strategy</span>
+              <span class="ar-tag">Agency</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">5 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="Postgres vs MySQL in 2024: A Real-World Comparison"
+           data-cat="development" data-year="2024" data-tags="postgresql,mysql,database"
+           data-read="7" data-author="marcus-kim" data-date="2024-10-15">
+          <div class="ar-index">05</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">Development</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Oct 15, 2024</span>
+            </div>
+            <div class="ar-title">Postgres vs MySQL in 2024: A Real-World Comparison</div>
+            <div class="ar-excerpt">What actually matters when choosing a database for a production SaaS product — from someone who's used both.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">PostgreSQL</span>
+              <span class="ar-tag">Database</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">7 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="blog-single.html" class="archive-row"
+           data-title="Setting Up CI/CD for a Next.js App on AWS in 30 Minutes"
+           data-cat="development" data-year="2024" data-tags="devops,aws,next.js,ci/cd,github actions"
+           data-read="10" data-author="marcus-kim" data-date="2024-09-28">
+          <div class="ar-index">06</div>
+          <div class="ar-body">
+            <div class="ar-meta">
+              <span class="ar-cat">Development</span>
+              <div class="ar-dot"></div>
+              <span class="ar-date">Sep 28, 2024</span>
+            </div>
+            <div class="ar-title">Setting Up CI/CD for a Next.js App on AWS in 30 Minutes</div>
+            <div class="ar-excerpt">The exact pipeline we deploy for every client project — GitHub Actions, ECR, and ECS step by step.</div>
+            <div class="ar-tags">
+              <span class="ar-tag">DevOps</span>
+              <span class="ar-tag">AWS</span>
+              <span class="ar-tag">Next.js</span>
+            </div>
+          </div>
+          <div class="ar-right">
+            <span class="ar-read-time">10 min read</span>
+            <span class="ar-arrow">→</span>
+          </div>
+        </a>
+
+      </div><!-- end list-posts 2024 -->
+
+      <!-- GRID VIEW posts (same posts, different markup) -->
+      <div class="grid-posts">
+        <a href="blog-single.html" class="grid-card" data-title="How We Embedded AI Into a CRM and Cut Manual Work by 70%" data-cat="ai" data-year="2024" data-tags="ai,llms,openai" data-read="8" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">AI & Automation</span><div class="gc-dot"></div><span class="gc-date">Dec 12, 2024</span></div>
+          <h3>How We Embedded AI Into a CRM and Cut Manual Work by 70%</h3>
+          <p>Architecture decisions, pitfalls, and real numbers behind integrating LLMs into a legacy CRM.</p>
+          <div class="gc-footer"><span class="gc-read-time">8 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="The Design Decisions That Ship Faster" data-cat="design" data-year="2024" data-tags="ui design,figma" data-read="6" data-author="sara-r">
+          <div class="gc-meta"><span class="gc-cat">Design</span><div class="gc-dot"></div><span class="gc-date">Nov 28, 2024</span></div>
+          <h3>The Design Decisions That Ship Faster</h3>
+          <p>Why constraints-first design cut our average cycle from 3 weeks to 9 days.</p>
+          <div class="gc-footer"><span class="gc-read-time">6 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Launching NexVault from Zero in 6 Weeks" data-cat="case-study" data-year="2024" data-tags="next.js,postgresql,aws" data-read="11" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">Case Study</span><div class="gc-dot"></div><span class="gc-date">Nov 14, 2024</span></div>
+          <h3>Launching NexVault from Zero in 6 Weeks</h3>
+          <p>Full retrospective on the stack, timeline, and one decision we almost got wrong.</p>
+          <div class="gc-footer"><span class="gc-read-time">11 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Why Most Agencies Fail at Retainers" data-cat="strategy" data-year="2024" data-tags="strategy,agency" data-read="5" data-author="alex-j">
+          <div class="gc-meta"><span class="gc-cat">Strategy</span><div class="gc-dot"></div><span class="gc-date">Oct 31, 2024</span></div>
+          <h3>Why Most Agencies Fail at Retainers</h3>
+          <p>The structural problem with agency retainers — and the model we use instead.</p>
+          <div class="gc-footer"><span class="gc-read-time">5 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Postgres vs MySQL in 2024" data-cat="development" data-year="2024" data-tags="postgresql,mysql,database" data-read="7" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">Development</span><div class="gc-dot"></div><span class="gc-date">Oct 15, 2024</span></div>
+          <h3>Postgres vs MySQL in 2024: A Real-World Comparison</h3>
+          <p>What actually matters when choosing a database for a production SaaS product.</p>
+          <div class="gc-footer"><span class="gc-read-time">7 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Setting Up CI/CD for a Next.js App on AWS in 30 Minutes" data-cat="development" data-year="2024" data-tags="devops,aws,next.js" data-read="10" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">Development</span><div class="gc-dot"></div><span class="gc-date">Sep 28, 2024</span></div>
+          <h3>Setting Up CI/CD for a Next.js App on AWS in 30 Minutes</h3>
+          <p>GitHub Actions, ECR, and ECS — the exact pipeline we use on every project.</p>
+          <div class="gc-footer"><span class="gc-read-time">10 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+      </div>
+    </div><!-- end year group 2024 -->
+
+    <!-- ════ 2023 GROUP ════ -->
+    <div class="year-group" data-year-group="2023">
+      <div class="year-divider">
+        <span class="year-divider-num">2023</span>
+        <div class="year-divider-line"></div>
+        <span class="year-divider-count">8 articles</span>
+      </div>
+      <div class="list-posts">
+        <a href="blog-single.html" class="archive-row" data-title="What Makes a Great Agency Brief" data-cat="strategy" data-year="2023" data-tags="strategy,agency,brief" data-read="4" data-author="alex-j" data-date="2023-09-10">
+          <div class="ar-index">07</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Strategy</span><div class="ar-dot"></div><span class="ar-date">Sep 10, 2023</span></div>
+            <div class="ar-title">What Makes a Great Agency Brief — From a Developer's Perspective</div>
+            <div class="ar-excerpt">The project briefs that save us weeks are written a specific way. Here's the template we wish every client used.</div>
+            <div class="ar-tags"><span class="ar-tag">Strategy</span><span class="ar-tag">Agency</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">4 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="archive-row" data-title="TypeScript in 2023: Is It Worth It?" data-cat="development" data-year="2023" data-tags="typescript,javascript,development" data-read="6" data-author="marcus-kim" data-date="2023-07-18">
+          <div class="ar-index">08</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Development</span><div class="ar-dot"></div><span class="ar-date">Jul 18, 2023</span></div>
+            <div class="ar-title">TypeScript in 2023: Is It Worth It for Every Project?</div>
+            <div class="ar-excerpt">An honest answer after using TypeScript on every project for two years — when it helps and when it just adds friction.</div>
+            <div class="ar-tags"><span class="ar-tag">TypeScript</span><span class="ar-tag">JavaScript</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">6 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="archive-row" data-title="Designing for Dark Mode: What We Learned" data-cat="design" data-year="2023" data-tags="ui design,dark mode,css" data-read="7" data-author="sara-r" data-date="2023-05-02">
+          <div class="ar-index">09</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Design</span><div class="ar-dot"></div><span class="ar-date">May 2, 2023</span></div>
+            <div class="ar-title">Designing for Dark Mode: What We Learned Building 20+ Interfaces</div>
+            <div class="ar-excerpt">Dark mode isn't just inverting colours. Here's what we've learned about contrast, hierarchy, and perception in dark UIs.</div>
+            <div class="ar-tags"><span class="ar-tag">UI Design</span><span class="ar-tag">CSS</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">7 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="archive-row" data-title="React Native vs Flutter in Production" data-cat="development" data-year="2023" data-tags="react native,flutter,mobile" data-read="9" data-author="alex-j" data-date="2023-02-14">
+          <div class="ar-index">10</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Development</span><div class="ar-dot"></div><span class="ar-date">Feb 14, 2023</span></div>
+            <div class="ar-title">React Native vs Flutter in Production: An Honest Verdict</div>
+            <div class="ar-excerpt">We've shipped apps in both. Here's what we'd choose today — and why the answer isn't as clear-cut as the internet suggests.</div>
+            <div class="ar-tags"><span class="ar-tag">React Native</span><span class="ar-tag">Flutter</span><span class="ar-tag">Mobile</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">9 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+      </div>
+      <div class="grid-posts">
+        <a href="blog-single.html" class="grid-card" data-title="What Makes a Great Agency Brief" data-cat="strategy" data-year="2023" data-tags="strategy,agency" data-read="4" data-author="alex-j">
+          <div class="gc-meta"><span class="gc-cat">Strategy</span><div class="gc-dot"></div><span class="gc-date">Sep 10, 2023</span></div>
+          <h3>What Makes a Great Agency Brief</h3>
+          <p>The template we wish every client used — from a developer's perspective.</p>
+          <div class="gc-footer"><span class="gc-read-time">4 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="TypeScript in 2023: Is It Worth It?" data-cat="development" data-year="2023" data-tags="typescript,javascript" data-read="6" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">Development</span><div class="gc-dot"></div><span class="gc-date">Jul 18, 2023</span></div>
+          <h3>TypeScript in 2023: Is It Worth It for Every Project?</h3>
+          <p>When TypeScript genuinely helps and when it just adds friction.</p>
+          <div class="gc-footer"><span class="gc-read-time">6 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Designing for Dark Mode" data-cat="design" data-year="2023" data-tags="ui design,dark mode,css" data-read="7" data-author="sara-r">
+          <div class="gc-meta"><span class="gc-cat">Design</span><div class="gc-dot"></div><span class="gc-date">May 2, 2023</span></div>
+          <h3>Designing for Dark Mode: What We Learned</h3>
+          <p>Contrast, hierarchy, and perception in dark UIs — from 20+ interfaces.</p>
+          <div class="gc-footer"><span class="gc-read-time">7 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="React Native vs Flutter in Production" data-cat="development" data-year="2023" data-tags="react native,flutter,mobile" data-read="9" data-author="alex-j">
+          <div class="gc-meta"><span class="gc-cat">Development</span><div class="gc-dot"></div><span class="gc-date">Feb 14, 2023</span></div>
+          <h3>React Native vs Flutter: An Honest Verdict</h3>
+          <p>We've shipped in both. Here's what we'd choose today and why.</p>
+          <div class="gc-footer"><span class="gc-read-time">9 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+      </div>
+    </div><!-- end 2023 -->
+
+    <!-- ════ 2022 GROUP ════ -->
+    <div class="year-group" data-year-group="2022">
+      <div class="year-divider">
+        <span class="year-divider-num">2022</span>
+        <div class="year-divider-line"></div>
+        <span class="year-divider-count">4 articles</span>
+      </div>
+      <div class="list-posts">
+        <a href="blog-single.html" class="archive-row" data-title="Why We Moved From Create React App to Next.js" data-cat="development" data-year="2022" data-tags="next.js,react,migration" data-read="5" data-author="marcus-kim" data-date="2022-11-03">
+          <div class="ar-index">11</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Development</span><div class="ar-dot"></div><span class="ar-date">Nov 3, 2022</span></div>
+            <div class="ar-title">Why We Moved Every Project From CRA to Next.js</div>
+            <div class="ar-excerpt">The performance wins, the DX improvements, and the one thing we still miss about Create React App.</div>
+            <div class="ar-tags"><span class="ar-tag">Next.js</span><span class="ar-tag">React</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">5 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="archive-row" data-title="How to Price Your Agency Services" data-cat="strategy" data-year="2022" data-tags="strategy,pricing,agency" data-read="8" data-author="alex-j" data-date="2022-06-20">
+          <div class="ar-index">12</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Strategy</span><div class="ar-dot"></div><span class="ar-date">Jun 20, 2022</span></div>
+            <div class="ar-title">How to Price Your Agency Services Without Underselling</div>
+            <div class="ar-excerpt">The pricing frameworks we've tested, the ones that stuck, and why hourly rates are almost always a mistake.</div>
+            <div class="ar-tags"><span class="ar-tag">Strategy</span><span class="ar-tag">Pricing</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">8 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="archive-row" data-title="Building a Design System from Scratch" data-cat="design" data-year="2022" data-tags="ui design,design system,figma,tokens" data-read="12" data-author="sara-r" data-date="2022-03-11">
+          <div class="ar-index">13</div>
+          <div class="ar-body">
+            <div class="ar-meta"><span class="ar-cat">Design</span><div class="ar-dot"></div><span class="ar-date">Mar 11, 2022</span></div>
+            <div class="ar-title">Building a Design System from Scratch: Our Full Process</div>
+            <div class="ar-excerpt">Tokens, components, documentation, and the hardest parts — a comprehensive guide from our design team.</div>
+            <div class="ar-tags"><span class="ar-tag">UI Design</span><span class="ar-tag">Figma</span><span class="ar-tag">Design System</span></div>
+          </div>
+          <div class="ar-right"><span class="ar-read-time">12 min read</span><span class="ar-arrow">→</span></div>
+        </a>
+      </div>
+      <div class="grid-posts">
+        <a href="blog-single.html" class="grid-card" data-title="Why We Moved From Create React App to Next.js" data-cat="development" data-year="2022" data-tags="next.js,react" data-read="5" data-author="marcus-kim">
+          <div class="gc-meta"><span class="gc-cat">Development</span><div class="gc-dot"></div><span class="gc-date">Nov 3, 2022</span></div>
+          <h3>Why We Moved Every Project From CRA to Next.js</h3>
+          <p>Performance wins, DX improvements, and one thing we still miss.</p>
+          <div class="gc-footer"><span class="gc-read-time">5 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="How to Price Your Agency Services" data-cat="strategy" data-year="2022" data-tags="strategy,pricing,agency" data-read="8" data-author="alex-j">
+          <div class="gc-meta"><span class="gc-cat">Strategy</span><div class="gc-dot"></div><span class="gc-date">Jun 20, 2022</span></div>
+          <h3>How to Price Your Agency Services Without Underselling</h3>
+          <p>The frameworks we've tested and why hourly rates are almost always a mistake.</p>
+          <div class="gc-footer"><span class="gc-read-time">8 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+        <a href="blog-single.html" class="grid-card" data-title="Building a Design System from Scratch" data-cat="design" data-year="2022" data-tags="ui design,figma" data-read="12" data-author="sara-r">
+          <div class="gc-meta"><span class="gc-cat">Design</span><div class="gc-dot"></div><span class="gc-date">Mar 11, 2022</span></div>
+          <h3>Building a Design System from Scratch</h3>
+          <p>Tokens, components, docs — a comprehensive guide from our design team.</p>
+          <div class="gc-footer"><span class="gc-read-time">12 min read</span><span class="gc-arrow">→</span></div>
+        </a>
+      </div>
+    </div><!-- end 2022 -->
+
+    <!-- EMPTY STATE (shown when no results match) -->
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">∅</span>
+      <h3>NO RESULTS</h3>
+      <p id="emptyMsg">No articles match your current filters. Try a different search term or clear your filters.</p>
+      <button class="btn-outline" id="clearAllBtn">Clear all filters</button>
+    </div>
+
+  </div><!-- end archive-results -->
+</div><!-- end archive-layout -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2024 Hopreneur Inc. — All rights reserved</p>
+    <ul class="footer-socials">
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <p>Toronto, Canada</p>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════
+   CURSOR
+════════════════════════════════════ */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+(function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,input,select,label').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='60px'; ring.style.height='60px'; cursor.style.transform='translate(-50%,-50%) scale(0)'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='38px'; ring.style.height='38px'; cursor.style.transform='translate(-50%,-50%) scale(1)'; });
+});
+
+/* ════════════════════════════════════
+   FILTER ENGINE
+════════════════════════════════════ */
+const searchInput   = document.getElementById('searchInput');
+const searchClear   = document.getElementById('searchClear');
+const sortSelect    = document.getElementById('sortSelect');
+const yearSelect    = document.getElementById('yearSelect');
+const resultCount   = document.getElementById('resultCount');
+const totalCountEl  = document.getElementById('totalCountStatus');
+const searchTimeEl  = document.getElementById('searchTime');
+const emptyState    = document.getElementById('emptyState');
+const emptyMsg      = document.getElementById('emptyMsg');
+const activeFilters = document.getElementById('activeFilters');
+
+// Collect all posts (both list rows and grid cards)
+const allListRows  = document.querySelectorAll('.archive-row');
+const allGridCards = document.querySelectorAll('.grid-card');
+const yearGroups   = document.querySelectorAll('.year-group');
+
+let state = {
+  query:    '',
+  cat:      'all',
+  year:     'all',
+  topics:   [],
+  rt:       'all',
+  authors:  [],
+};
+
+/* ── keyword ⌘K shortcut ── */
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
+  if (e.key === 'Escape') { searchInput.blur(); }
+});
+
+/* ── search input ── */
+searchInput.addEventListener('input', () => {
+  state.query = searchInput.value.trim().toLowerCase();
+  searchClear.classList.toggle('visible', state.query.length > 0);
+  applyFilters();
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  state.query = '';
+  searchClear.classList.remove('visible');
+  applyFilters();
+});
+
+/* ── category buttons ── */
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.cat = btn.dataset.cat;
+    applyFilters();
+  });
+});
+
+/* ── sort ── */
+sortSelect.addEventListener('change', () => applyFilters());
+
+/* ── year select (top bar) ── */
+yearSelect.addEventListener('change', () => {
+  state.year = yearSelect.value;
+  // sync sidebar year buttons
+  document.querySelectorAll('.year-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.year === state.year);
+  });
+  applyFilters();
+});
+
+/* ── sidebar year buttons ── */
+document.querySelectorAll('.year-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.year = btn.dataset.year;
+    yearSelect.value = state.year;
+    applyFilters();
+  });
+});
+
+/* ── topic checkboxes ── */
+document.querySelectorAll('.topic-checkbox[data-topic]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const t = cb.dataset.topic;
+    if (cb.checked) { if (!state.topics.includes(t)) state.topics.push(t); }
+    else { state.topics = state.topics.filter(x => x !== t); }
+    applyFilters();
+  });
+});
+
+/* ── author checkboxes ── */
+document.querySelectorAll('.topic-checkbox[data-author]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const a = cb.dataset.author;
+    if (cb.checked) { if (!state.authors.includes(a)) state.authors.push(a); }
+    else { state.authors = state.authors.filter(x => x !== a); }
+    applyFilters();
+  });
+});
+
+/* ── read time ── */
+document.querySelectorAll('.rt-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.rt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.rt = btn.dataset.rt;
+    applyFilters();
+  });
+});
+
+/* ── reset buttons ── */
+document.getElementById('resetTopics').addEventListener('click', () => {
+  state.topics = [];
+  document.querySelectorAll('.topic-checkbox[data-topic]').forEach(cb => cb.checked = false);
+  applyFilters();
+});
+document.getElementById('resetReadTime').addEventListener('click', () => {
+  state.rt = 'all';
+  document.querySelectorAll('.rt-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.rt-btn[data-rt="all"]').classList.add('active');
+  applyFilters();
+});
+document.getElementById('clearAllBtn').addEventListener('click', clearAll);
+
+function clearAll() {
+  state = { query: '', cat: 'all', year: 'all', topics: [], rt: 'all', authors: [] };
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.cat-btn[data-cat="all"]').classList.add('active');
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.year-btn[data-year="all"]').classList.add('active');
+  document.querySelectorAll('.topic-checkbox').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.rt-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.rt-btn[data-rt="all"]').classList.add('active');
+  sortSelect.value = 'newest';
+  yearSelect.value = 'all';
+  applyFilters();
+}
+
+/* ═══ CORE FILTER FUNCTION ═══ */
+function applyFilters() {
+  const t0 = performance.now();
+  const q = state.query;
+
+  /* ── collect rows/cards that match ── */
+  function matches(el) {
+    const title   = (el.dataset.title   || '').toLowerCase();
+    const cat     = (el.dataset.cat     || '').toLowerCase();
+    const tags    = (el.dataset.tags    || '').toLowerCase();
+    const year    = (el.dataset.year    || '');
+    const read    = parseInt(el.dataset.read || '0', 10);
+    const author  = (el.dataset.author  || '').toLowerCase();
+
+    if (q && !title.includes(q) && !tags.includes(q) && !cat.includes(q)) return false;
+    if (state.cat !== 'all') {
+      const catMap = { development: 'development', design: 'design', strategy: 'strategy', ai: 'ai', 'case-study': 'case-study' };
+      if (!cat.includes(state.cat.replace('-', ''))) return false;
+    }
+    if (state.year !== 'all' && year !== state.year) return false;
+    if (state.topics.length > 0 && !state.topics.some(t => tags.includes(t))) return false;
+    if (state.authors.length > 0 && !state.authors.includes(author)) return false;
+    if (state.rt === 'short'  && read >= 5)  return false;
+    if (state.rt === 'medium' && (read < 5 || read > 10)) return false;
+    if (state.rt === 'long'   && read <= 10) return false;
+
+    return true;
+  }
+
+  /* ── highlight matched text in titles ── */
+  function applyHighlight(titleEl) {
+    if (!titleEl) return;
+    let raw = titleEl.textContent;
+    if (!q) { titleEl.innerHTML = raw; return; }
+    const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    titleEl.innerHTML = raw.replace(regex, '<mark class="highlight">$1</mark>');
+  }
+
+  let visibleCount = 0;
+
+  /* ── filter list rows ── */
+  allListRows.forEach(row => {
+    const show = matches(row);
+    row.style.display = show ? '' : 'none';
+    if (show) {
+      visibleCount++;
+      applyHighlight(row.querySelector('.ar-title'));
+    }
+  });
+
+  /* ── filter grid cards ── */
+  allGridCards.forEach(card => {
+    const show = matches(card);
+    card.style.display = show ? '' : 'none';
+    if (show) applyHighlight(card.querySelector('h3'));
+  });
+
+  /* ── show/hide year group dividers ── */
+  yearGroups.forEach(group => {
+    const year = group.dataset.yearGroup;
+    const anyVisible = state.year === 'all' || state.year === year;
+    const hasVisiblePosts = [...group.querySelectorAll('.archive-row')].some(r => r.style.display !== 'none');
+    group.style.display = (anyVisible && hasVisiblePosts) ? '' : 'none';
+  });
+
+  /* ── empty state ── */
+  emptyState.classList.toggle('visible', visibleCount === 0);
+  if (q) emptyMsg.textContent = `No articles found matching "${state.query}". Try a different keyword or clear your filters.`;
+  else    emptyMsg.textContent = 'No articles match your current filters. Try clearing some filters.';
+
+  /* ── update counts ── */
+  resultCount.textContent = visibleCount;
+  const ms = (performance.now() - t0).toFixed(1);
+  searchTimeEl.textContent = `${ms}ms`;
+
+  /* ── update active filter chips ── */
+  renderFilterChips();
+}
+
+function renderFilterChips() {
+  const chips = [];
+  if (state.query)     chips.push({ label: `"${state.query}"`, clear: () => { searchInput.value=''; state.query=''; searchClear.classList.remove('visible'); } });
+  if (state.cat !== 'all') chips.push({ label: state.cat, clear: () => { state.cat='all'; document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.cat-btn[data-cat="all"]').classList.add('active'); }});
+  if (state.year !== 'all') chips.push({ label: state.year, clear: () => { state.year='all'; yearSelect.value='all'; document.querySelectorAll('.year-btn').forEach(b=>b.classList.remove('active')); document.querySelector('[data-year="all"]').classList.add('active'); }});
+  state.topics.forEach(t => chips.push({ label: t, clear: () => { state.topics=state.topics.filter(x=>x!==t); document.querySelector(`.topic-checkbox[data-topic="${t}"]`).checked=false; }}));
+  state.authors.forEach(a => chips.push({ label: a.replace('-',' '), clear: () => { state.authors=state.authors.filter(x=>x!==a); document.querySelector(`.topic-checkbox[data-author="${a}"]`).checked=false; }}));
+  if (state.rt !== 'all') chips.push({ label: state.rt+' read', clear: () => { state.rt='all'; document.querySelectorAll('.rt-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.rt-btn[data-rt="all"]').classList.add('active'); }});
+
+  activeFilters.innerHTML = '';
+  activeFilters.classList.toggle('has-filters', chips.length > 0);
+
+  chips.forEach(chip => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-chip';
+    btn.innerHTML = `${chip.label} <span class="chip-x">✕</span>`;
+    btn.addEventListener('click', () => { chip.clear(); applyFilters(); });
+    activeFilters.appendChild(btn);
+  });
+}
+
+/* ═══ VIEW TOGGLE (List / Grid) ═══ */
+const listBtn = document.getElementById('listViewBtn');
+const gridBtn = document.getElementById('gridViewBtn');
+const results = document.getElementById('archiveResults');
+
+listBtn.addEventListener('click', () => {
+  results.classList.remove('grid-view');
+  listBtn.classList.add('active');
+  gridBtn.classList.remove('active');
+});
+gridBtn.addEventListener('click', () => {
+  results.classList.add('grid-view');
+  gridBtn.classList.add('active');
+  listBtn.classList.remove('active');
+});
+
+/* ═══ SCROLL FADE ═══ */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+/* Init */
+totalCountEl.textContent = allListRows.length;
+</script>
+</body>
+</html>

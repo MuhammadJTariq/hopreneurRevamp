@@ -12,7 +12,7 @@ Class Rest {
     public $author_id;
 
     public $post_id;
-    public function fetch($path, $id = null){
+    public static function fetch($path, $id = null){
         $data = null;
 
         if($id){
@@ -49,6 +49,7 @@ Class Rest {
 
         $title = $post['title']['rendered'];
         $excerpt = $post['excerpt']['rendered'];
+        $slug = $post['slug'];
 
         $this->author_id = $post['author'];
         $author_name = $this->returnRecentAuthor();
@@ -64,7 +65,8 @@ Class Rest {
             'excerpt' => $excerpt,
             'author_name' => $author_name,
             'date' => $date,
-            'category' => $cat_name
+            'category' => $cat_name,
+            'slug' => $slug,
         ];
 
         echo $this->format($array_values);
@@ -74,7 +76,7 @@ Class Rest {
    private function format(array $data)
 {
     return <<<HTML
-<a href="blog-single.html" class="post-card fade-up">
+<a href="blog/{$data['slug']}" class="post-card fade-up">
     <div class="post-card-thumb" data-id="{$data['id']}">
         <div class="post-card-thumb-grid"></div>
         <div class="post-card-thumb-glow"></div>
@@ -174,7 +176,9 @@ HTML;
         foreach ($development as $dev){
             echo $this->buildtail($dev);
         }
-        echo $this->buildtail($strategy);
+        foreach ($strategy as $strat){
+            echo $this->buildtail($strat);
+        }
     }
 
     private function buildtail($values){
@@ -182,7 +186,7 @@ HTML;
             ? date('F j, Y', strtotime($values['date'])) 
             : '';
     return <<<HTML
-        <a href="blog-single.html" class="post-row fade-up">
+    <a href="blog/{$values['slug']}" class="post-row fade-up">
       <div class="post-row-thumb">
         <div class="post-row-thumb-grid"></div>
         <div class="post-row-thumb-val">BR</div>
