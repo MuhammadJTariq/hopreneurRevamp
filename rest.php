@@ -5,7 +5,7 @@ Class Rest {
     private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
     private $pathLimit = "https://hopreneur.com/cms/wp-json/wp/v2/posts?";
     private $find_post_id = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
-    private $find_author_id = "https://hopreneur.com/cms/wp-json/wp/v2/users/";
+    public $find_author_id = "https://hopreneur.com/cms/wp-json/wp/v2/users/";
     private $find_categories = "https://hopreneur.com/cms/wp-json/wp/v2/categories?post=";
     private $all_categories = "https://hopreneur.com/cms/wp-json/wp/v2/categories";
 
