@@ -9,7 +9,7 @@ function view($file) {
 
 
 
-$routes = ['/', '/contact', '/products', '/terms', '/projects', '/blog', 'blog-single'];
+$routes = ['/', 'contact', 'products', 'terms', 'projects', 'blog', 'blog-single'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
 $parts = explode('/', $uri);
@@ -21,7 +21,7 @@ if(str_ends_with($uri, '.php')){
 
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
-    if($uri = ''){
+    if($uri === ''){
         view('home');
         exit;
     }
@@ -32,6 +32,9 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             exit;
         }
         $slug = $parts[1];
+
+        RestSingle::$slug = $slug;
+
         view('blog-single'); // this is where we add the single page logic
         exit;
     }

@@ -209,7 +209,7 @@ HTML;
 HTML;
     }
 
-    private function buildPath($cat_num, $per_page) {
+    public function buildPath($cat_num, $per_page) {
     return sprintf(
         "https://hopreneur.com/cms/wp-json/wp/v2/posts?categories=%d&per_page=%d",
         $cat_num,

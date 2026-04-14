@@ -27,63 +27,14 @@
 </nav>
 
 <!-- BREADCRUMB -->
-<div class="breadcrumb">
-  <a href="blog.html">Journal</a>
-  <span class="sep">/</span>
-  <!-- ✏️ EDIT: category -->
-  <a href="#">AI & Automation</a>
-  <span class="sep">/</span>
-  <!-- ✏️ EDIT: short post title -->
-  <span class="current">How We Embedded AI Into a CRM</span>
-</div>
-
+<?php $single = new Restsingle(); 
+$single->content();?>
 <!-- ═══════════════════════════════════
      POST HERO
      ✏️ EDIT: all fields below
 ════════════════════════════════════ -->
-<section class="post-hero">
-  <div class="post-hero-inner">
 
-    <div class="post-hero-left">
-      <div>
-        <div class="post-meta-top">
-          <!-- ✏️ EDIT: category, date -->
-          <span class="post-category">AI & Automation</span>
-          <span class="post-meta-sep"></span>
-          <span class="post-date">December 12, 2024</span>
-        </div>
-
-        <!-- ✏️ EDIT: post title -->
-        <h1 class="post-title">HOW WE EMBEDDED AI INTO A CRM AND CUT MANUAL WORK BY 70%</h1>
-
-        <!-- ✏️ EDIT: intro sentence / excerpt -->
-        <p class="post-excerpt">
-          A detailed breakdown of our LLM integration process — the architecture decisions, the pitfalls, and the real numbers behind a project that changed how our client works.
-        </p>
-      </div>
-
-      <div class="post-hero-footer">
-        <div class="author-block">
-          <!-- ✏️ EDIT: initials, name, title -->
-          <div class="author-avatar">MK</div>
-          <div>
-            <span class="author-name">Marcus Kim</span>
-            <span class="author-title-sm">Lead Engineer, Hopreneur</span>
-          </div>
-        </div>
-        <div class="post-stats">
-          <!-- ✏️ EDIT: read time, publish date -->
-          <div class="post-stat">
-            <span class="post-stat-val">8 min</span>
-            <span class="post-stat-label">Read time</span>
-          </div>
-          <div class="post-stat">
-            <span class="post-stat-val">Dec '24</span>
-            <span class="post-stat-label">Published</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  
 
     <div class="post-hero-right">
       <!-- ✏️ REPLACE: swap .post-hero-image with your cover image -->
