@@ -48,13 +48,16 @@ class RestSingle{
         $extras = [
             'author_name' => $name,
         ];
-        $this->extractHeadings();
+        //$this->extractHeadings();
         //var_dump($category);
         echo $this->returnIntro($values, $category);
         echo $this->returnHero($values, $extras);
 
 
 
+    }
+    public function article(){
+        return $this->content;
     }
 
     public function returnHero($values, $extras){
@@ -109,13 +112,13 @@ class RestSingle{
     }
 
     public function sidebar(){
-        $headings = $this->extractHeadings();
+        //$headings = $this->extractHeadings();
         return <<<HTML
         <aside class="post-sidebar-left">
             <div class="toc-label">Contents</div>
             <!-- ✏️ EDIT: match h2/h3 IDs in your prose -->
             <ul class="toc-list" id="toc">
-            <li><a href="#background">{$headings[0]}</a></li>
+            <li><a href="#background">The Background</a></li>
             <li><a href="#problem">The Problem We Were Solving</a></li>
             <li><a href="#architecture">Architecture Overview</a></li>
             <li class="toc-h3"><a href="#llm-selection">Choosing an LLM</a></li>
@@ -141,7 +144,7 @@ class RestSingle{
 
     }
 
-    private function extractHeadings() {
+    /*private function extractHeadings() {
     $dom = new DOMDocument();
 
     // suppress HTML warnings
@@ -171,8 +174,10 @@ class RestSingle{
         ];
 
     }
-    file_put_contents($this->debug, json_encode($headings));
-    file_put_contents($this->debug, json_encode($listElements));
+    file_put_contents($this->debug, json_encode([
+    'headings' => $headings,
+    'lists' => $listElements
+]));
 
     return $headings;
 
@@ -185,7 +190,7 @@ class RestSingle{
 </div> return patterns for each element that fits */
 }
 
-}
+
 
 
 ?>
