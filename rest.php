@@ -1,5 +1,10 @@
 <?php 
 
+// we have to work more on this class including loading the data before hand 
+// and adding it to an instance variable, so that we don't do all the fetching after
+// load on constructor call
+// this is to slow
+
 Class Rest {
     private $debug = __DIR__ . '/debug.log';
     private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts/";
@@ -34,6 +39,16 @@ Class Rest {
         curl_close($ch);
 
         return $data;
+    }
+
+    public function count(){
+        $total = $this->fetch($this->path);
+        $counter = 0;
+        foreach ($total as $item){
+            $counter++;
+        }
+
+        return $counter;
     }
 
     public function returnCat($id){

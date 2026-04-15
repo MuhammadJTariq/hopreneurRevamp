@@ -2,7 +2,6 @@
 
 class RestSingle{
     private $title;
-    private $description;
     private $content;
 
     private $debug = __DIR__ . '/debug.log';
@@ -10,6 +9,10 @@ class RestSingle{
     private $path = "https://hopreneur.com/cms/wp-json/wp/v2/posts?slug=";
 
     private $ipc;
+
+    private $headings;
+
+    private $inner;
 
     public function __construct(){
         $this->ipc = new Rest();
@@ -47,19 +50,17 @@ class RestSingle{
         $category = $this->ipc->fetch($this->ipc->buildPath($cat_id, 1));
         $extras = [
             'author_name' => $name,
+            'category' => $category,
         ];
         //$this->extractHeadings();
         //var_dump($category);
         echo $this->returnIntro($values, $category);
         echo $this->returnHero($values, $extras);
+        $this->ProcessHeadings();
 
 
 
     }
-    public function article(){
-        return $this->content;
-    }
-
     public function returnHero($values, $extras){
         return <<<HTML
         <section class="post-hero">
@@ -113,20 +114,24 @@ class RestSingle{
 
     public function sidebar(){
         //$headings = $this->extractHeadings();
+
+        $headings = $this->headings;
+
+        $tocItems = '';
+
+        foreach ($headings as $head) {
+            $class = !empty($head['class']) ? "class=\"{$head['class']}\"" : "";
+
+            $tocItems .= "<li><a href=\"#{$head['id']}\" {$class}>{$head['text']}</a></li>";
+        }
+
+
         return <<<HTML
         <aside class="post-sidebar-left">
             <div class="toc-label">Contents</div>
             <!-- ✏️ EDIT: match h2/h3 IDs in your prose -->
             <ul class="toc-list" id="toc">
-            <li><a href="#background">The Background</a></li>
-            <li><a href="#problem">The Problem We Were Solving</a></li>
-            <li><a href="#architecture">Architecture Overview</a></li>
-            <li class="toc-h3"><a href="#llm-selection">Choosing an LLM</a></li>
-            <li class="toc-h3"><a href="#data-pipeline">The Data Pipeline</a></li>
-            <li><a href="#integration">Integration Process</a></li>
-            <li><a href="#pitfalls">Pitfalls We Hit</a></li>
-            <li><a href="#results">Results & Numbers</a></li>
-            <li><a href="#takeaways">Key Takeaways</a></li>
+                {$tocItems}
             </ul>
 
             <div class="sidebar-divider"></div>
@@ -144,53 +149,60 @@ class RestSingle{
 
     }
 
-    /*private function extractHeadings() {
-    $dom = new DOMDocument();
+    
+    public function article(){
+        echo $this->inner;
+    }
 
-    // suppress HTML warnings
-    libxml_use_internal_errors(true);
 
-    $dom->loadHTML($this->content);
+    private function ProcessHeadings(){
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($this->content);
+        libxml_clear_errors();
+        $xpath = new DOMXPath($dom);
+        $headings = [];
+        foreach ($xpath->query('//h1 | //h2 | //h3') as $node){
+            $text = trim($node->textContent);
+            $node->setAttribute('id', $text);
+            if($xpath->query('//h3')){
+                $node->setAttribute('class','toc-h3');
+            }
 
-    libxml_clear_errors();
+            $class = $node->hasAttribute('class') ? $node->getAttribute('class') :'';
 
-    $headings = [];
-    $listElements = [];
-
-    for ($i = 1; $i <= 3; $i++) {
-        $tags = $dom->getElementsByTagName("h$i");
-
-        foreach ($tags as $tag) {
             $headings[] = [
-                'tag' => "h$i",
-                'text' => trim($tag->textContent)
+                'text' => $text, 
+                'id' => $node->getAttribute('id'), 
+                'tag' => $node->nodeName,
+                'class'=> $class,
+                
+                
             ];
+         }
+
+         $this->headings = $headings;
+         $this->process($dom);
+         
+
+
+         
+
+    }
+
+    private function process($dom) {
+        $body = $dom->getElementsByTagName('body')->item(0);
+        $html = '';
+        foreach ($body->childNodes as $node) {
+            $html .= $dom->saveHTML($node);
+
         }
-    }
-    $tags = $dom->getElementsByTagName('li');
-    foreach($tags as $tag){
-        $listElements[] = [
-            'tagContent' => trim($tag->textContent),
-        ];
 
-    }
-    file_put_contents($this->debug, json_encode([
-    'headings' => $headings,
-    'lists' => $listElements
-]));
-
-    return $headings;
-
-   /* <div class="callout">
-        <span class="callout-icon">💡</span>
-        <div>
-          <div class="callout-label">Key insight</div>
-          <p>When evaluating AI integration projects, the highest-ROI interventions are almost always the ones that automate <strong>high-frequency, low-judgement tasks</strong> — not the flashy "AI agents" that sound better in demos.</p>
-        </div>
-</div> return patterns for each element that fits */
+        $this->inner = $html;
+    
 }
 
-
+}
 
 
 ?>

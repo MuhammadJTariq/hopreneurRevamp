@@ -36,7 +36,7 @@ $rest = new Rest();
     </div>
     <div class="hero-right-col">
       <!-- ✏️ EDIT: total post count -->
-      <span class="hero-post-count">24</span>
+      <span class="hero-post-count"><?php echo $rest->count(); ?></span>
       <span class="hero-post-count-label">Articles published</span>
     </div>
   </div>
@@ -44,7 +44,7 @@ $rest = new Rest();
 
 <!-- ═══════════ FILTER BAR ═══════════ -->
 <div class="filter-bar">
-  <button class="filter-btn active">All <span class="filter-count">24</span></button>
+  <button class="filter-btn active">All <span class="filter-count"><?php echo $rest->count(); ?></span></button>
   <button class="filter-btn">Development <span class="filter-count">8</span></button>
   <button class="filter-btn">Design <span class="filter-count">6</span></button>
   <button class="filter-btn">Strategy <span class="filter-count">4</span></button>
